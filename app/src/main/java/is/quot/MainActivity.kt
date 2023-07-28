@@ -5,23 +5,29 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ImageBitmap
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.annotation.ExperimentalCoilApi
+import coil.compose.ImagePainter.State.Empty.painter
 import coil.compose.rememberImagePainter
+import com.skydoves.landscapist.CircularReveal
+import com.skydoves.landscapist.glide.GlideImage
 import `is`.quot.ui.theme.QuotTheme
 
 class MainActivity : ComponentActivity() {
@@ -59,7 +65,17 @@ fun Quote(quote: Quote, modifier: Modifier = Modifier) {
                 .padding(16.dp)
                 .align(Alignment.BottomStart),
         ) {
-            Image(painter = rememberImagePainter(data = quote.imageUrl), contentDescription = null)
+            quote.imageUrl?.let {
+                GlideImage(
+                    modifier = Modifier
+                        .width(128.dp)
+                        .height(128.dp)
+                        .clip(CircleShape),
+                    imageModel = it,
+                    contentScale = ContentScale.Crop,
+                    circularReveal = CircularReveal(duration = 250),
+                )
+            }
             Text(
                 text = quote.text,
                 modifier = modifier,
