@@ -1,7 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
-    id "kotlin-kapt"
+    id 'com.google.devtools.ksp'
 }
 
 apply from: "../versions.gradle"
@@ -51,10 +51,10 @@ android {
 
 dependencies {
 
-    implementation "androidx.core:core-ktx:$versions.coreKts"
+    implementation "androidx.core:core-ktx:$versions.coreKtx"
     implementation platform("org.jetbrains.kotlin:kotlin-bom:$versions.kotlinBom")
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.runtimeKtx"
-    implementation 'androidx.activity:activity-compose:1.5.1'
+    implementation "androidx.activity:activity-compose:$versions.composeActivity"
     implementation platform("androidx.compose:compose-bom:$versions.compose")
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-graphics'
@@ -74,7 +74,7 @@ dependencies {
 
     // Moshi
     implementation "com.squareup.moshi:moshi:$versions.moshi"
-    kapt "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
+    ksp "com.squareup.moshi:moshi-kotlin-codegen:$versions.moshi"
     implementation "com.squareup.moshi:moshi-kotlin:$versions.moshi"
     implementation "com.squareup.moshi:moshi-adapters:$versions.moshi"
 
