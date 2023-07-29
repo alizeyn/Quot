@@ -19,6 +19,9 @@ ext.versions = [
         appCompoat                          : "1.6.1",
         constraintLayout                    : "2.1.4",
 
+        // Hilt
+        hilt                                : "2.46.1",
+
         // Logging
         timber                              : "5.0.1",
 
