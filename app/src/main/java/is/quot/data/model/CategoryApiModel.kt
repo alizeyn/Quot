@@ -1,9 +1,13 @@
 package `is`.quot.data.model
 
-import `is`.quot.Category
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import `is`.quot.domain.model.Category
 
+@JsonClass(generateAdapter = true)
 data class CategoryApiModel(
-    val name: String,
+    @Json(name = "name")
+    val name: String
 )
 
 fun CategoryApiModel.toCategory() = Category(

@@ -1,4 +1,4 @@
-package `is`.quot
+package `is`.quot.domain.model
 
 data class Quote(
     val text: String,
