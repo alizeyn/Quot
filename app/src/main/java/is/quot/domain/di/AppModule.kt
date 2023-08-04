@@ -9,6 +9,9 @@ import `is`.quot.data.remote.QuoteApi
 import `is`.quot.domain.repository.QuoteRepository
 import `is`.quot.domain.repository.QuoteRepositoryImpl
 import kotlinx.coroutines.CoroutineDispatcher
+import okhttp3.Interceptor
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import javax.inject.Singleton
@@ -22,7 +25,27 @@ object AppModule {
     @Provides
     @Singleton
     fun provideQuoteApi(): QuoteApi {
+
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
+
+        val apiKeyInterceptor = Interceptor { chain ->
+            val original = chain.request()
+            val request = original.newBuilder()
+                .header("Authorization", BuildConfig.API_KEY)
+                .method(original.method, original.body)
+                .build()
+            chain.proceed(request)
+        }
+
+        val okHttpClient = OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .addInterceptor(apiKeyInterceptor)
+            .build()
+
         return Retrofit.Builder()
+            .client(okHttpClient)
             .addConverterFactory(MoshiConverterFactory.create())
             .baseUrl(BASE_URL)
             .build()

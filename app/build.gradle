@@ -19,6 +19,8 @@ android {
         versionCode versions.versionCode
         versionName "$versions.versionName"
 
+        buildConfigField("String", "API_KEY", "${API_KEY}")
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
@@ -64,6 +66,7 @@ dependencies {
     implementation "androidx.core:core-ktx:$versions.coreKtx"
     implementation platform("org.jetbrains.kotlin:kotlin-bom:$versions.kotlinBom")
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.runtimeKtx"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.runtimeKtx"
     implementation "androidx.activity:activity-compose:$versions.composeActivity"
     implementation platform("androidx.compose:compose-bom:$versions.compose")
     implementation 'androidx.compose.ui:ui'
@@ -81,6 +84,7 @@ dependencies {
     // Retrofit
     implementation "com.squareup.retrofit2:retrofit:$versions.retrofit"
     implementation "com.squareup.retrofit2:converter-moshi:$versions.retrofit"
+    implementation "com.squareup.okhttp3:logging-interceptor:$versions.okHttp"
 
     // OkHttp
     implementation "com.squareup.okhttp3:okhttp:$versions.okHttp"

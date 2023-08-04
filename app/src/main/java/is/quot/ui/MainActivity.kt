@@ -1,8 +1,10 @@
-package `is`.quot
+package `is`.quot.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
@@ -19,17 +21,45 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.annotation.ExperimentalCoilApi
+import androidx.lifecycle.lifecycleScope
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 import dagger.hilt.android.AndroidEntryPoint
 import `is`.quot.domain.model.Quote
 import `is`.quot.ui.theme.QuotTheme
+import timber.log.Timber
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val viewModel: QuoteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        lifecycleScope.launchWhenStarted {
+            viewModel.quoteState.collect { state ->
+                when (state) {
+                    is QuoteState.Idle -> {
+                        // show Idle
+                        Log.i("alizeyn", "onCreate: idle")
+                    }
+                    is QuoteState.Loading -> {
+                        // show loading
+                        Log.i("alizeyn", "onCreate: loading")
+                    }
+                    is QuoteState.Success -> {
+                        // show quote
+                        Log.i("alizeyn", "onCreate: success -> ${state.quote.text}")
+                    }
+                    is QuoteState.Error -> {
+                        // show error
+                        Log.i("alizeyn", "onCreate: error")
+                    }
+                }
+            }
+        }
+
         setContent {
             val quote = Quote(
                 text = "No matter what happens now\n" +
@@ -49,7 +79,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@OptIn(ExperimentalCoilApi::class)
 @Composable
 fun Quote(quote: Quote, modifier: Modifier = Modifier) {
     Box(
