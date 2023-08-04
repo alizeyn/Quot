@@ -40,11 +40,11 @@ class MainActivity : ComponentActivity() {
         lifecycleScope.launchWhenStarted {
             viewModel.quoteState.collect { state ->
                 when (state) {
-                    is QuoteState.Idle -> {
+                    QuoteState.Idle -> {
                         // show Idle
                         Log.i("alizeyn", "onCreate: idle")
                     }
-                    is QuoteState.Loading -> {
+                    QuoteState.Loading -> {
                         // show loading
                         Log.i("alizeyn", "onCreate: loading")
                     }
