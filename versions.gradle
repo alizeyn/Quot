@@ -34,7 +34,7 @@ ext.versions = [
         moshi                               : "1.14.0",
         okHttp                              : "4.11.0",
         retrofit                            : "2.9.0",
-        coil                                : "1.3.2",
+        coil                                : "2.1.0",
         glide                               : "1.3.6",
 
 ]

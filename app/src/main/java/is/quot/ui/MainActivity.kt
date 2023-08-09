@@ -12,6 +12,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -21,14 +23,13 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.lifecycleScope
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 import dagger.hilt.android.AndroidEntryPoint
 import `is`.quot.domain.model.Quote
+import `is`.quot.ui.intro.IntroView
+import `is`.quot.ui.quote.QuoteView
 import `is`.quot.ui.theme.QuotTheme
-import timber.log.Timber
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -37,44 +38,36 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        lifecycleScope.launchWhenStarted {
-            viewModel.quoteState.collect { state ->
-                when (state) {
-                    QuoteState.Idle -> {
-                        // show Idle
-                        Log.i("alizeyn", "onCreate: idle")
-                    }
-                    QuoteState.Loading -> {
-                        // show loading
-                        Log.i("alizeyn", "onCreate: loading")
-                    }
-                    is QuoteState.Success -> {
-                        // show quote
-                        Log.i("alizeyn", "onCreate: success -> ${state.quote.text}")
-                    }
-                    is QuoteState.Error -> {
-                        // show error
-                        Log.i("alizeyn", "onCreate: error")
-                    }
+        setContent {
+            QuotTheme {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                    MainView(viewModel = viewModel)
                 }
             }
         }
+    }
+}
 
-        setContent {
-            val quote = Quote(
-                text = "No matter what happens now\n" +
-                    "You shouldn't be afraid\n" +
-                    "Because I know today has been\n" +
-                    "The most perfect day I've ever seen",
-                author = "Radiohead",
-                imageUrl = "https://assets-global.website-files.com/62905d4927c20a36731fd606/629b61f932efec505e3e9267_Thom-Yorke.png",
-                categories = emptyList(),
-            )
-            QuotTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-                    Quote(quote = quote)
-                }
-            }
+@Composable
+fun MainView(viewModel: QuoteViewModel) {
+    val quoteStatus: QuoteState by viewModel.quoteState.collectAsState()
+    when (val status = quoteStatus) {
+
+        is QuoteState.Initial -> {
+            IntroView(viewModel = viewModel)
+        }
+
+        is QuoteState.Loading -> {
+            // Show loading state
+        }
+
+        is QuoteState.Success -> {
+            val quote = status.quote
+            QuoteView(quote = quote)
+        }
+
+        is QuoteState.Error -> {
+            // Show error state
         }
     }
 }

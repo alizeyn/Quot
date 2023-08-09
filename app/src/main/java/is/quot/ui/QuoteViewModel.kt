@@ -14,11 +14,9 @@ import javax.inject.Inject
 
 sealed interface QuoteState {
 
-    object Idle : QuoteState
+    object Initial : QuoteState
     data class Success(val quote: Quote) : QuoteState
-
     object Loading : QuoteState
-
     data class Error(val message: String) : QuoteState
 }
 
@@ -27,14 +25,10 @@ class QuoteViewModel @Inject constructor(
     private val quoteRepository: QuoteRepository,
 ) : ViewModel() {
 
-    private val _quoteState = MutableStateFlow<QuoteState>(QuoteState.Idle)
+    private val _quoteState = MutableStateFlow<QuoteState>(QuoteState.Initial)
     val quoteState: StateFlow<QuoteState> get() = _quoteState
 
-    init {
-        getQuote()
-    }
-
-    private fun getQuote() = viewModelScope.launch(Dispatchers.IO) {
+    fun getQuote() = viewModelScope.launch(Dispatchers.IO) {
         try {
             _quoteState.value = QuoteState.Loading
             val quote = quoteRepository.getQuote()
