@@ -6,7 +6,7 @@ import `is`.quot.domain.model.Quote
 
 @JsonClass(generateAdapter = true)
 data class QuoteApiModel(
-    @Json(name = "text")
+    @Json(name = "quote")
     val text: String,
 
     @Json(name = "author")
@@ -15,8 +15,9 @@ data class QuoteApiModel(
     @Json(name = "imageUrl")
     val imageUrl: String?,
 
-    @Json(name = "categories")
-    val categories: List<CategoryApiModel>
+    // TODO fix on the backend side
+    // @Json(name = "categories")
+    // val categories: List<CategoryApiModel>
 )
 
 
@@ -24,5 +25,6 @@ fun QuoteApiModel.toQuote() = Quote(
     text = text,
     author = author,
     imageUrl = imageUrl,
-    categories = categories.map { it.toCategory() },
+//    categories = categories.map { it.toCategory() },
+    categories = emptyList()
 )

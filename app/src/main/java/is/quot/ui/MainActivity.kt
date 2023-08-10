@@ -1,19 +1,17 @@
 package `is`.quot.ui
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
+import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -23,6 +21,8 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.google.accompanist.systemuicontroller.SystemUiController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
 import dagger.hilt.android.AndroidEntryPoint
@@ -40,7 +40,15 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             QuotTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
+                Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
+
+                    val systemUiController: SystemUiController = rememberSystemUiController()
+                    systemUiController.apply {
+                        isStatusBarVisible = false
+                        isNavigationBarVisible = false
+                        isSystemBarsVisible = false
+                    }
+
                     MainView(viewModel = viewModel)
                 }
             }
@@ -51,23 +59,22 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun MainView(viewModel: QuoteViewModel) {
     val quoteStatus: QuoteState by viewModel.quoteState.collectAsState()
-    when (val status = quoteStatus) {
 
-        is QuoteState.Initial -> {
-            IntroView(viewModel = viewModel)
-        }
-
-        is QuoteState.Loading -> {
-            // Show loading state
-        }
-
-        is QuoteState.Success -> {
-            val quote = status.quote
-            QuoteView(quote = quote)
-        }
-
-        is QuoteState.Error -> {
-            // Show error state
+    Crossfade(targetState = quoteStatus, label = "") { currentStatus ->
+        when (currentStatus) {
+            is QuoteState.Initial -> {
+                IntroView(viewModel = viewModel)
+            }
+            is QuoteState.Loading -> {
+                // Show loading state
+            }
+            is QuoteState.Success -> {
+                val quote = currentStatus.quote
+                QuoteView(quote = quote)
+            }
+            is QuoteState.Error -> {
+                // Show error state
+            }
         }
     }
 }

@@ -5,6 +5,6 @@ import retrofit2.http.GET
 
 interface QuoteApi {
 
-    @GET("v1/quote")
+    @GET("v1/quote/random")
     suspend fun getQuote(): QuoteApiModel
 }
