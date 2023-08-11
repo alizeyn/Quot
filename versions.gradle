@@ -18,6 +18,8 @@ ext.versions = [
         composeAnimation                    : "1.4.3",
         appCompoat                          : "1.6.1",
         constraintLayout                    : "2.1.4",
+        accompanistSystemUiController       : "0.28.0",
+        accompanistCoil                     : "0.15.0",
 
         // Hilt
         hilt                                : "2.46.1",

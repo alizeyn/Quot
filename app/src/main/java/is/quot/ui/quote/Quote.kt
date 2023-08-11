@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -13,7 +12,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -58,8 +56,8 @@ fun QuoteView(quote: Quote, modifier: Modifier = Modifier) {
                 quote.imageUrl?.let {
                     GlideImage(
                         modifier = Modifier
-                            .width(128.dp)
-                            .height(128.dp)
+                            .width(64.dp)
+                            .height(64.dp)
                             .clip(CircleShape),
                         imageModel = it,
                         contentScale = ContentScale.Crop,
@@ -72,8 +70,8 @@ fun QuoteView(quote: Quote, modifier: Modifier = Modifier) {
                 text = quote.text,
                 modifier = modifier,
                 color = Color.White,
-                lineHeight = 40.sp,
-                fontSize = 48.sp
+                lineHeight = 30.sp,
+                fontSize = 36.sp
             )
             Text(
                 text = " - ${quote.author}",
