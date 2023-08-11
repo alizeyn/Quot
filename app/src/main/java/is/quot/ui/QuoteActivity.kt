@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -52,7 +53,10 @@ class QuoteActivity : ComponentActivity() {
 fun MainView(viewModel: QuoteViewModel) {
     val quoteStatus: QuoteState by viewModel.quoteState.collectAsState()
 
-    Crossfade(targetState = quoteStatus, label = "") { currentStatus ->
+    Crossfade(
+        targetState = quoteStatus, label = "",
+        animationSpec = tween(durationMillis = 1000),
+    ) { currentStatus ->
         when (currentStatus) {
             is QuoteState.Initial -> {
                 IntroView(viewModel = viewModel)
