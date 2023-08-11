@@ -78,47 +78,6 @@ fun MainView(viewModel: QuoteViewModel) {
     }
 }
 
-@Composable
-fun Quote(quote: Quote, modifier: Modifier = Modifier) {
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(MaterialTheme.colorScheme.background),
-    ) {
-        Column(
-            modifier = modifier
-                .padding(16.dp)
-                .align(Alignment.BottomStart),
-        ) {
-            quote.imageUrl?.let {
-                GlideImage(
-                    modifier = Modifier
-                        .width(128.dp)
-                        .height(128.dp)
-                        .clip(CircleShape),
-                    imageModel = it,
-                    contentScale = ContentScale.Crop,
-                    circularReveal = CircularReveal(duration = 250),
-                )
-            }
-            Text(
-                text = quote.text,
-                modifier = modifier,
-                color = Color.White,
-                lineHeight = 32.sp,
-                fontSize = 32.sp
-            )
-            Text(
-                text = " - ${quote.author}",
-                modifier = modifier,
-                color = MaterialTheme.colorScheme.tertiary,
-                fontSize = 14.sp,
-            )
-        }
-    }
-}
-
-
 @Preview(showBackground = true, device = Devices.NEXUS_5, showSystemUi = true)
 @Composable
 fun QuotePreview() {
@@ -133,7 +92,7 @@ fun QuotePreview() {
     )
     QuotTheme {
         Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
-            Quote(quote)
+            QuoteView(quote)
         }
     }
 }
