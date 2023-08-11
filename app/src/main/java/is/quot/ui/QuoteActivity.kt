@@ -21,7 +21,6 @@ import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.accompanist.systemuicontroller.SystemUiController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.skydoves.landscapist.CircularReveal
 import com.skydoves.landscapist.glide.GlideImage
@@ -32,7 +31,7 @@ import `is`.quot.ui.quote.QuoteView
 import `is`.quot.ui.theme.QuotTheme
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class QuoteActivity : ComponentActivity() {
 
     private val viewModel: QuoteViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,8 +41,8 @@ class MainActivity : ComponentActivity() {
             QuotTheme {
                 Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 
-                    val systemUiController: SystemUiController = rememberSystemUiController()
-                    systemUiController.apply {
+                    // Make the app full screen
+                    rememberSystemUiController().apply {
                         isStatusBarVisible = false
                         isNavigationBarVisible = false
                         isSystemBarsVisible = false
