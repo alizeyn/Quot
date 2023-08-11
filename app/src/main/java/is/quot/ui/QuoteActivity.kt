@@ -18,6 +18,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import `is`.quot.domain.model.Quote
 import `is`.quot.ui.intro.IntroView
+import `is`.quot.ui.quote.Loading
 import `is`.quot.ui.quote.QuoteView
 import `is`.quot.ui.theme.QuotTheme
 
@@ -55,15 +56,18 @@ fun MainView(viewModel: QuoteViewModel) {
             is QuoteState.Initial -> {
                 IntroView(viewModel = viewModel)
             }
+
             is QuoteState.Loading -> {
-                // Show loading state
+                Loading()
             }
+
             is QuoteState.Success -> {
                 val quote = currentStatus.quote
                 QuoteView(quote = quote)
             }
+
             is QuoteState.Error -> {
-                // Show error state
+                Loading()
             }
         }
     }
