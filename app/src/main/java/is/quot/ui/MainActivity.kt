@@ -40,7 +40,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             QuotTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
+                Surface(modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background) {
 
                     val systemUiController: SystemUiController = rememberSystemUiController()
                     systemUiController.apply {
@@ -84,7 +84,7 @@ fun Quote(quote: Quote, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxSize()
-            .background(Color.Black),
+            .background(MaterialTheme.colorScheme.background),
     ) {
         Column(
             modifier = modifier
@@ -112,7 +112,7 @@ fun Quote(quote: Quote, modifier: Modifier = Modifier) {
             Text(
                 text = " - ${quote.author}",
                 modifier = modifier,
-                color = Color.LightGray,
+                color = MaterialTheme.colorScheme.tertiary,
                 fontSize = 14.sp,
             )
         }
