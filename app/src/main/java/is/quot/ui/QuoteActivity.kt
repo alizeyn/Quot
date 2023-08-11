@@ -18,6 +18,7 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import `is`.quot.domain.model.Quote
 import `is`.quot.ui.intro.IntroView
+import `is`.quot.ui.quote.ErrorView
 import `is`.quot.ui.quote.Loading
 import `is`.quot.ui.quote.QuoteView
 import `is`.quot.ui.theme.QuotTheme
@@ -67,7 +68,7 @@ fun MainView(viewModel: QuoteViewModel) {
             }
 
             is QuoteState.Error -> {
-                Loading()
+                ErrorView()
             }
         }
     }

@@ -12,6 +12,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.ColorMatrix
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalInspectionMode
 import androidx.compose.ui.res.painterResource
@@ -37,31 +38,26 @@ fun QuoteView(quote: Quote, modifier: Modifier = Modifier) {
         ) {
             if (isPreviewMode()) {
                 // Display a placeholder image when in preview mode
-
-                val colorMatrix = ColorMatrix().apply {
-                    setToSaturation(0f)
-                }
-
-                Image(
-                    painter = painterResource(id = R.drawable.ic_placeholer_author),
-                    contentDescription = null,
-                    modifier = Modifier
-                        .width(180.dp)
-                        .height(180.dp)
-                        .clip(CircleShape),
-                    contentScale = ContentScale.Crop,
-                    colorFilter = ColorFilter.colorMatrix(colorMatrix)
+                QuoteImage(
+                    modifier = modifier,
+                    painter = painterResource(id = R.drawable.ic_placeholer_author)
                 )
             } else {
-                quote.imageUrl?.let {
+                val url = quote.imageUrl
+                if (url != null) {
                     GlideImage(
                         modifier = Modifier
                             .width(64.dp)
                             .height(64.dp)
                             .clip(CircleShape),
-                        imageModel = it,
+                        imageModel = url,
                         contentScale = ContentScale.Crop,
                         circularReveal = CircularReveal(duration = 250),
+                    )
+                } else quote.fallbackImage?.let { painter ->
+                    QuoteImage(
+                        modifier = modifier,
+                        painter = painter
                     )
                 }
             }
@@ -81,6 +77,25 @@ fun QuoteView(quote: Quote, modifier: Modifier = Modifier) {
             )
         }
     }
+}
+
+@Composable
+fun QuoteImage(modifier: Modifier = Modifier, painter: Painter) {
+
+    val colorMatrix = ColorMatrix().apply {
+        setToSaturation(0f)
+    }
+
+    Image(
+        painter = painter,
+        contentDescription = null,
+        modifier = Modifier
+            .width(180.dp)
+            .height(180.dp)
+            .clip(CircleShape),
+        contentScale = ContentScale.Crop,
+        colorFilter = ColorFilter.colorMatrix(colorMatrix)
+    )
 }
 
 @Composable
