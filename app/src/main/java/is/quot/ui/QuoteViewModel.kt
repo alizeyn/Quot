@@ -34,6 +34,7 @@ class QuoteViewModel @Inject constructor(
         try {
             _quoteState.value = QuoteState.Loading
             val quote = quoteRepository.getQuote()
+            delay(2.seconds)
             _quoteState.value = QuoteState.Success(quote)
         } catch (e: Exception) {
             e.printStackTrace()

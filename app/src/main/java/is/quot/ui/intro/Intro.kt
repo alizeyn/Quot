@@ -1,39 +1,28 @@
 package `is`.quot.ui.intro
 
-import android.os.Build
-import androidx.annotation.DrawableRes
 import androidx.compose.animation.core.*
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import coil.ImageLoader
-import coil.compose.rememberAsyncImagePainter
-import coil.decode.GifDecoder
-import coil.decode.ImageDecoderDecoder
-import coil.request.ImageRequest
-import coil.size.Size
+import com.airbnb.lottie.compose.*
 import `is`.quot.R
 import `is`.quot.ui.QuoteViewModel
 import kotlinx.coroutines.delay
-import timber.log.Timber
 
 @Composable
 fun IntroView(
@@ -57,21 +46,18 @@ fun IntroView(
                     modifier = modifier
                         .align(Alignment.End)
                 ) {
+
                     RippleLoadingAnimation(
                         modifier = modifier.align(Alignment.Center),
                         circleColor = Color.White,
                         size = 300.dp,
                     )
 
-                    GifImage(
+                    WisdomInjectionLottieAnimation(
                         modifier = modifier
                             .align(Alignment.Center)
-                            .clickable {
-                                viewModel.getQuote()
-                            },
-                        size = 200.dp,
-                        gif = R.drawable.inject,
-                        grayscale = true,
+                            .clickable { viewModel.getQuote() },
+                        lottieResId = R.raw.lottie_inject,
                     )
                 }
 
@@ -89,49 +75,15 @@ fun IntroView(
 }
 
 @Composable
-fun GifImage(
-    modifier: Modifier = Modifier,
-    @DrawableRes gif: Int,
-    size: Dp,
-    grayscale: Boolean = false,
-) {
-    val context = LocalContext.current
-    val imageLoader = ImageLoader.Builder(context)
-        .components {
-            if (Build.VERSION.SDK_INT >= 28) {
-                add(ImageDecoderDecoder.Factory())
-            } else {
-                add(GifDecoder.Factory())
-            }
-        }
-        .build()
+fun WisdomInjectionLottieAnimation(modifier: Modifier = Modifier, lottieResId: Int) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottie_inject))
+    val progress by animateLottieCompositionAsState(composition = composition, iterations = LottieConstants.IterateForever)
 
-    Box(
-        modifier = modifier
-            .size(size)
-            .clip(CircleShape)
-            .background(Color.White)
-            .border(4.dp, Color.White, CircleShape)
-    ) {
-        Image(
-            painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(context)
-                    .data(data = gif)
-                    .apply {
-                        size(Size.ORIGINAL)
-                    }
-                    .build(), imageLoader = imageLoader
-            ),
-            contentDescription = null,
-            modifier = Modifier
-                .wrapContentSize(Alignment.Center)
-                .align(Alignment.Center)
-                .scale(0.7f)
-                .background(Color.White),
-            colorFilter = if (grayscale) ColorFilter.tint(Color.Black) else null,
-        )
-    }
-
+    LottieAnimation(
+        modifier = modifier.size(128.dp),
+        composition = composition,
+        progress = progress,
+    )
 }
 
 @Composable
