@@ -59,13 +59,12 @@ fun MainView(modifier: Modifier = Modifier, viewModel: QuoteViewModel) {
         Crossfade(targetState = quoteState, animationSpec = tween(durationMillis = 1000), label = "") {
             when (it) {
                 is QuoteState.Initial -> IntroView(modifier = modifier) { viewModel.getQuote() }
+                is QuoteState.Loading -> LoadingView(modifier = modifier)
                 is QuoteState.Success -> QuoteView(modifier = modifier, quote = it.quote)
                 is QuoteState.Error -> ErrorView(modifier = modifier)
-                is QuoteState.Loading -> LoadingView(modifier = modifier)
             }
         }
     }
-
 }
 
 @Preview(showBackground = true, device = Devices.NEXUS_5, showSystemUi = true)

@@ -30,9 +30,6 @@ class QuoteViewModel @Inject constructor(
     private val _quoteState = MutableStateFlow<QuoteState>(QuoteState.Initial)
     val quoteState: StateFlow<QuoteState> get() = _quoteState
 
-    val isLoading
-        get() = _quoteState.value is QuoteState.Loading
-
     fun getQuote() = viewModelScope.launch(Dispatchers.IO) {
         try {
             _quoteState.value = QuoteState.Loading
@@ -45,7 +42,5 @@ class QuoteViewModel @Inject constructor(
             delay(2.seconds)
             _quoteState.value = QuoteState.Error(e.message.toString())
         }
-
     }
-
 }

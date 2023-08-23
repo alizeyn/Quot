@@ -19,7 +19,7 @@ import `is`.quot.domain.model.Quote
 fun ErrorView(modifier: Modifier = Modifier) {
 
     val errorQuote = Quote(
-        text = "If you don't get what you want, you suffer; if you get what you don't want, you suffer; even when you get exactly what you want, you still suffer because you can't hold on to it forever.",
+        text = "If you don't get what you want, you suffer; if you get what you don't want, you suffer; even when you get exactly what you want, you still suffer ...",
         author = "Socrates",
         fallbackImage = painterResource(id = R.drawable.img_author_socrates),
         categories = emptyList(),
