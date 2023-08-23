@@ -19,8 +19,8 @@ import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import dagger.hilt.android.AndroidEntryPoint
 import `is`.quot.domain.model.Quote
 import `is`.quot.ui.intro.IntroView
+import `is`.quot.ui.loading.LoadingView
 import `is`.quot.ui.quote.ErrorView
-import `is`.quot.ui.quote.Loading
 import `is`.quot.ui.quote.QuoteView
 import `is`.quot.ui.theme.QuotTheme
 
@@ -50,32 +50,18 @@ class QuoteActivity : ComponentActivity() {
 }
 
 @Composable
-fun MainView(viewModel: QuoteViewModel) {
-    val quoteStatus: QuoteState by viewModel.quoteState.collectAsState()
+fun MainView(modifier: Modifier = Modifier, viewModel: QuoteViewModel) {
+    val quoteState: QuoteState by viewModel.quoteState.collectAsState()
 
-    Crossfade(
-        targetState = quoteStatus, label = "",
-        animationSpec = tween(durationMillis = 1000),
-    ) { currentStatus ->
-        when (currentStatus) {
-            is QuoteState.Initial -> {
-                IntroView(viewModel = viewModel)
-            }
-
-            is QuoteState.Loading -> {
-                Loading()
-            }
-
-            is QuoteState.Success -> {
-                val quote = currentStatus.quote
-                QuoteView(quote = quote)
-            }
-
-            is QuoteState.Error -> {
-                ErrorView()
-            }
+    Crossfade(targetState = quoteState, animationSpec = tween(durationMillis = 1000), label = "") {
+        when (it) {
+            is QuoteState.Initial -> IntroView(modifier = modifier) { viewModel.getQuote() }
+            is QuoteState.Success -> QuoteView(modifier = modifier, quote = it.quote)
+            is QuoteState.Error -> ErrorView(modifier = modifier)
+            is QuoteState.Loading -> LoadingView(modifier = modifier)
         }
     }
+
 }
 
 @Preview(showBackground = true, device = Devices.NEXUS_5, showSystemUi = true)

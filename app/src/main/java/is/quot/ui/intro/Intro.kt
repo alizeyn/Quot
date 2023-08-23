@@ -12,6 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
 import androidx.compose.ui.graphics.Color
@@ -21,14 +22,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.airbnb.lottie.compose.*
 import `is`.quot.R
-import `is`.quot.ui.QuoteViewModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun IntroView(
     modifier: Modifier = Modifier,
-    viewModel: QuoteViewModel,
+    onWisdomInjectionClicked: () -> Unit = {},
 ) {
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -45,18 +46,22 @@ fun IntroView(
                 Box(
                     modifier = modifier
                         .align(Alignment.End)
+                        .padding(all = 32.dp)
+                        .clip(CircleShape)
+                        .clickable { onWisdomInjectionClicked() }
                 ) {
 
                     RippleLoadingAnimation(
-                        modifier = modifier.align(Alignment.Center),
+                        modifier = modifier
+                            .align(Alignment.Center)
+                            .alpha(0.5f),
                         circleColor = Color.White,
                         size = 300.dp,
                     )
 
                     WisdomInjectionLottieAnimation(
                         modifier = modifier
-                            .align(Alignment.Center)
-                            .clickable { viewModel.getQuote() },
+                            .align(Alignment.Center),
                         lottieResId = R.raw.lottie_inject,
                     )
                 }
@@ -89,18 +94,12 @@ fun WisdomInjectionLottieAnimation(modifier: Modifier = Modifier, lottieResId: I
 @Composable
 fun RippleLoadingAnimation(
     modifier: Modifier,
-    circleColor: Color = Color.Magenta,
+    circleColor: Color = Color.White,
     animationDelay: Int = 1500,
     size: Dp,
 ) {
 
     val circles = listOf(
-        remember {
-            Animatable(initialValue = 0f)
-        },
-        remember {
-            Animatable(initialValue = 0f)
-        },
         remember {
             Animatable(initialValue = 0f)
         }
@@ -117,7 +116,7 @@ fun RippleLoadingAnimation(
                 animationSpec = infiniteRepeatable(
                     animation = tween(
                         durationMillis = animationDelay,
-                        easing = LinearEasing
+                        easing = EaseInSine
                     ),
                     repeatMode = RepeatMode.Restart
                 )
@@ -140,8 +139,7 @@ fun RippleLoadingAnimation(
                         color = circleColor
                             .copy(alpha = (1 - animatable.value))
                     )
-            ) {
-            }
+            )
         }
     }
 }
