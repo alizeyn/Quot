@@ -29,59 +29,49 @@ fun IntroView(
     modifier: Modifier = Modifier,
     onWisdomInjectionClicked: () -> Unit = {},
 ) {
-
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.Black)
+    Row(
+        modifier = modifier.wrapContentHeight()
     ) {
+        Column(modifier = modifier) {
 
-        Row(
-            modifier = modifier
-                .wrapContentHeight()
-                .align(Alignment.BottomStart)
-        ) {
-            Column(modifier = modifier) {
+            Box(
+                modifier = modifier
+                    .align(Alignment.End)
+                    .padding(all = 32.dp)
+                    .clip(CircleShape)
+                    .clickable { onWisdomInjectionClicked() }
+            ) {
 
-                Box(
+                RippleLoadingAnimation(
                     modifier = modifier
-                        .align(Alignment.End)
-                        .padding(all = 32.dp)
-                        .clip(CircleShape)
-                        .clickable { onWisdomInjectionClicked() }
-                ) {
+                        .align(Alignment.Center)
+                        .alpha(0.5f),
+                    circleColor = Color.White,
+                    size = 300.dp,
+                )
 
-                    RippleLoadingAnimation(
-                        modifier = modifier
-                            .align(Alignment.Center)
-                            .alpha(0.5f),
-                        circleColor = Color.White,
-                        size = 300.dp,
-                    )
-
-                    WisdomInjectionLottieAnimation(
-                        modifier = modifier
-                            .align(Alignment.Center),
-                        lottieResId = R.raw.lottie_inject,
-                    )
-                }
-
-                Text(
-                    modifier = modifier,
-                    text = "Get your daily dose of wisdom",
-                    color = Color.White,
-                    fontSize = 64.sp,
-                    lineHeight = (64 - 8).sp,
-                    fontWeight = FontWeight.Black,
+                WisdomInjectionLottieAnimation(
+                    modifier = modifier
+                        .align(Alignment.Center),
+                    lottieResId = R.raw.lottie_inject,
                 )
             }
+
+            Text(
+                modifier = modifier,
+                text = "Get your daily dose of wisdom",
+                color = Color.White,
+                fontSize = 64.sp,
+                lineHeight = (64 - 8).sp,
+                fontWeight = FontWeight.Black,
+            )
         }
     }
 }
 
 @Composable
 fun WisdomInjectionLottieAnimation(modifier: Modifier = Modifier, lottieResId: Int) {
-    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.lottie_inject))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(lottieResId))
     val progress by animateLottieCompositionAsState(composition = composition, iterations = LottieConstants.IterateForever)
 
     LottieAnimation(

@@ -6,12 +6,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.viewModels
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
@@ -53,12 +55,14 @@ class QuoteActivity : ComponentActivity() {
 fun MainView(modifier: Modifier = Modifier, viewModel: QuoteViewModel) {
     val quoteState: QuoteState by viewModel.quoteState.collectAsState()
 
-    Crossfade(targetState = quoteState, animationSpec = tween(durationMillis = 1000), label = "") {
-        when (it) {
-            is QuoteState.Initial -> IntroView(modifier = modifier) { viewModel.getQuote() }
-            is QuoteState.Success -> QuoteView(modifier = modifier, quote = it.quote)
-            is QuoteState.Error -> ErrorView(modifier = modifier)
-            is QuoteState.Loading -> LoadingView(modifier = modifier)
+    Box(contentAlignment = Alignment.BottomStart) {
+        Crossfade(targetState = quoteState, animationSpec = tween(durationMillis = 1000), label = "") {
+            when (it) {
+                is QuoteState.Initial -> IntroView(modifier = modifier) { viewModel.getQuote() }
+                is QuoteState.Success -> QuoteView(modifier = modifier, quote = it.quote)
+                is QuoteState.Error -> ErrorView(modifier = modifier)
+                is QuoteState.Loading -> LoadingView(modifier = modifier)
+            }
         }
     }
 

@@ -1,9 +1,6 @@
 package `is`.quot.ui.quote
 
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -28,36 +25,29 @@ fun ErrorView(modifier: Modifier = Modifier) {
         categories = emptyList(),
     )
 
-    Box(
-        modifier = modifier
-            .fillMaxSize()
-            .background(Color.Black),
-    ) {
+    Column(modifier = modifier) {
 
-        Column(modifier = modifier) {
-
-            Column(
-                modifier = modifier
-                    .align(Alignment.End)
-                    .padding(end = 16.dp)
-            ) {
-                Text(
-                    text = "Error",
-                    modifier = modifier.align(Alignment.End),
-                    color = Color.White,
-                    fontSize = 64.sp
-                )
-                Text(
-                    text = "Couldn't get your wisdom dose",
-                    modifier = modifier,
-                    color = Color.LightGray,
-                    fontSize = 21.sp,
-                    textAlign = TextAlign.Start
-                )
-            }
-
-            QuoteView(quote = errorQuote)
+        Column(
+            modifier = modifier
+                .align(Alignment.End)
+                .padding(end = 16.dp)
+        ) {
+            Text(
+                text = "Error",
+                modifier = modifier.align(Alignment.End),
+                color = Color.White,
+                fontSize = 64.sp
+            )
+            Text(
+                text = "Couldn't get your wisdom dose",
+                modifier = modifier,
+                color = Color.LightGray,
+                fontSize = 21.sp,
+                textAlign = TextAlign.Start
+            )
         }
+
+        QuoteView(quote = errorQuote)
     }
 }
 

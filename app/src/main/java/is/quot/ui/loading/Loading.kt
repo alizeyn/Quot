@@ -1,6 +1,5 @@
 package `is`.quot.ui.loading
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.Text
@@ -20,44 +19,36 @@ import `is`.quot.ui.intro.RippleLoadingAnimation
 @Composable
 fun LoadingView(modifier: Modifier = Modifier) {
 
-    Box(
+    Row(
         modifier = modifier
-            .fillMaxSize()
-            .background(Color.Black)
+            .wrapContentHeight()
     ) {
+        Column(modifier = modifier) {
 
-        Row(
-            modifier = modifier
-                .wrapContentHeight()
-                .align(Alignment.BottomStart)
-        ) {
-            Column(modifier = modifier) {
+            Box(
+                modifier = modifier
+                    .align(Alignment.End)
+                    .padding(all = 32.dp)
+                    .clip(CircleShape)
+            ) {
 
-                Box(
+                RippleLoadingAnimation(
                     modifier = modifier
-                        .align(Alignment.End)
-                        .padding(all = 32.dp)
-                        .clip(CircleShape)
-                ) {
-
-                    RippleLoadingAnimation(
-                        modifier = modifier
-                            .align(Alignment.Center)
-                            .alpha(0.5f),
-                        circleColor = Color.White,
-                        size = 300.dp,
-                    )
-                }
-
-                Text(
-                    modifier = modifier,
-                    text = "Loading years of wisdom.",
-                    color = Color.White,
-                    fontSize = 64.sp,
-                    lineHeight = (64 - 8).sp,
-                    fontWeight = FontWeight.Black,
+                        .align(Alignment.Center)
+                        .alpha(0.5f),
+                    circleColor = Color.White,
+                    size = 300.dp,
                 )
             }
+
+            Text(
+                modifier = modifier,
+                text = "Loading years of wisdom.",
+                color = Color.White,
+                fontSize = 64.sp,
+                lineHeight = (64 - 8).sp,
+                fontWeight = FontWeight.Black,
+            )
         }
     }
 }
@@ -65,5 +56,5 @@ fun LoadingView(modifier: Modifier = Modifier) {
 @Composable
 @Preview
 fun LoadingViewPreview() {
-
+    LoadingView()
 }
