@@ -13,7 +13,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import `is`.quot.ui.intro.RippleLoadingAnimation
+import `is`.quot.ui.common.RippleCircleAnimation
 
 
 @Composable
@@ -33,11 +33,10 @@ fun LoadingView(modifier: Modifier = Modifier) {
                     .clip(CircleShape)
             ) {
 
-                RippleLoadingAnimation(
+                RippleCircleAnimation(
                     modifier = modifier
                         .align(Alignment.Center)
-                        .alpha(0.5f),
-                    circleColor = Color.White,
+                        .alpha(0.2f),
                     size = 300.dp,
                 )
             }
