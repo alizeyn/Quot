@@ -30,7 +30,8 @@ fun IntroView(
     onWisdomInjectionClicked: () -> Unit = {},
 ) {
     Row(
-        modifier = modifier.wrapContentHeight()
+        modifier = modifier.fillMaxSize(),
+        verticalAlignment = Alignment.Bottom
     ) {
         Column(modifier = modifier) {
 

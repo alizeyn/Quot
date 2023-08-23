@@ -21,7 +21,8 @@ fun LoadingView(modifier: Modifier = Modifier) {
 
     Row(
         modifier = modifier
-            .wrapContentHeight()
+            .fillMaxSize(),
+        verticalAlignment = Alignment.Bottom,
     ) {
         Column(modifier = modifier) {
 
