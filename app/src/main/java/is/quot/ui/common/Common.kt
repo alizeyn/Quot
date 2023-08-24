@@ -37,7 +37,8 @@ fun RippleCircleAnimation(
     ) {
         Canvas(modifier = Modifier.matchParentSize()) {
             val rippleRadius = size.toPx() * animatedProgress
-            val alpha = 1f - animatedProgress // Fade out as the ripple expands
+            // Fade out as the ripple expands
+            val alpha = 1f - animatedProgress
             drawCircle(
                 color = color.copy(alpha = alpha),
                 radius = rippleRadius

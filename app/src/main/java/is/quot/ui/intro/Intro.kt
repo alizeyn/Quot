@@ -11,6 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -53,7 +54,7 @@ fun IntroView(
 
             Text(
                 modifier = modifier,
-                text = "Get your daily dose of wisdom",
+                text = stringResource(id = R.string.intro_message),
                 color = Color.White,
                 fontSize = 64.sp,
                 lineHeight = (64 - 8).sp,

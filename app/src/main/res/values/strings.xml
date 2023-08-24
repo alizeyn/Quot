@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Quot</string>
+    <string name="intro_message">Get your daily dose of wisdom</string>
+    <string name="loading_message">Loading years of wisdom</string>
+    <string name="error_title">Error</string>
+    <string name="error_message">Couldn\'t get your wisdom dose</string>
+    <string name="error_quote_text">If you don\'t get what you want, you suffer; even when you get exactly what you want, you still suffer …</string>
+    <string name="error_quote_author">Socrates</string>
 </resources>
