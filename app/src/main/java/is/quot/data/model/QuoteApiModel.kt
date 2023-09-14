@@ -15,9 +15,8 @@ data class QuoteApiModel(
     @Json(name = "imageUrl")
     val imageUrl: String?,
 
-    // TODO fix on the backend side
-    // @Json(name = "categories")
-    // val categories: List<CategoryApiModel>
+     @Json(name = "categories")
+     val categories: List<CategoryApiModel>
 )
 
 
@@ -25,6 +24,5 @@ fun QuoteApiModel.toQuote() = Quote(
     text = text,
     author = author,
     imageUrl = imageUrl,
-//    categories = categories.map { it.toCategory() },
-    categories = emptyList()
+    categories = categories.map { it.toCategory() },
 )
