@@ -22,7 +22,7 @@ ext.versions = [
         accompanistCoil                     : "0.15.0",
 
         // Hilt
-        hilt                                : "2.47.0",
+        hilt                                : "2.47",
 
         // Logging
         timber                              : "5.0.1",
