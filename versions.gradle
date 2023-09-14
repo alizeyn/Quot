@@ -5,7 +5,7 @@ ext.versions = [
         versionName                         : "1.0.0-alpha1",
 
         // Module
-        compileSdk                          : 33,
+        compileSdk                          : 34,
         minSdk                              : 24,
         targetSdk                           : 29,
 
