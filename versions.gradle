@@ -10,9 +10,9 @@ ext.versions = [
         targetSdk                           : 29,
 
         // AndroidX
-        coreKtx                             : "1.10.1",
+        coreKtx                             : "1.12.0",
         kotlinBom                           : "1.8.0",
-        runtimeKtx                          : "2.6.1",
+        runtimeKtx                          : "2.6.2",
         compose                             : "2022.10.00",
         composeActivity                     : "1.7.2",
         composeAnimation                    : "1.4.3",
@@ -22,7 +22,7 @@ ext.versions = [
         accompanistCoil                     : "0.15.0",
 
         // Hilt
-        hilt                                : "2.46.1",
+        hilt                                : "2.47.0",
 
         // Logging
         timber                              : "5.0.1",
