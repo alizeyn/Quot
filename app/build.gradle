@@ -39,6 +39,7 @@ android {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.debug
         }
     }
     compileOptions {
@@ -73,8 +74,9 @@ dependencies {
 
     // AndroidX
     implementation "androidx.core:core-ktx:$versions.coreKtx"
-    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.runtimeKtx"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.runtimeKtx"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$versions.lifecycleKtx"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$versions.lifecycleKtx"
+    implementation "androidx.lifecycle:lifecycle-runtime-compose:$versions.lifecycleKtx"
     implementation "androidx.activity:activity-compose:$versions.composeActivity"
     implementation platform("androidx.compose:compose-bom:$versions.compose")
     implementation 'androidx.compose.ui:ui'
